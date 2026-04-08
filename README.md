@@ -35,13 +35,14 @@ uv pip install git+https://github.com/justynroberts/rundeck-mcp-server.git
 
 ### Claude Code
 
-Add the MCP server to Claude Code:
+**From a local clone:**
 
 ```bash
+git clone https://github.com/justynroberts/rundeck-mcp-server.git
 claude mcp add rundeck \
   -e RUNDECK_API_TOKEN=<your-api-token> \
   -e RUNDECK_URL=http://your-rundeck-server:4440 \
-  -- uvx rundeck-mcp --enable-write-tools
+  -- uv run --directory /path/to/rundeck-mcp-server rundeck-mcp --enable-write-tools
 ```
 
 Or add manually to `~/.claude/settings.json`:
@@ -50,8 +51,11 @@ Or add manually to `~/.claude/settings.json`:
 {
   "mcpServers": {
     "rundeck": {
-      "command": "uvx",
-      "args": ["rundeck-mcp", "--enable-write-tools"],
+      "command": "uv",
+      "args": [
+        "run", "--directory", "/path/to/rundeck-mcp-server",
+        "rundeck-mcp", "--enable-write-tools"
+      ],
       "env": {
         "RUNDECK_API_TOKEN": "<your-api-token>",
         "RUNDECK_URL": "http://your-rundeck-server:4440"
@@ -59,6 +63,15 @@ Or add manually to `~/.claude/settings.json`:
     }
   }
 }
+```
+
+**From PyPI (once published):**
+
+```bash
+claude mcp add rundeck \
+  -e RUNDECK_API_TOKEN=<your-api-token> \
+  -e RUNDECK_URL=http://your-rundeck-server:4440 \
+  -- uvx rundeck-mcp --enable-write-tools
 ```
 
 ### Claude Desktop
