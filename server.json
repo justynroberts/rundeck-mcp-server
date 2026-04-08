@@ -1,0 +1,31 @@
+{
+  "name": "rundeck-mcp",
+  "display_name": "Rundeck MCP Server",
+  "description": "MCP server for Rundeck - manage projects, jobs, and executions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justynroberts/rundeck-mcp-server"
+  },
+  "version_detail": {
+    "version": "0.1.0",
+    "release_date": "2026-04-08",
+    "is_latest": true
+  },
+  "packages": [
+    {
+      "registry_name": "pypi",
+      "name": "rundeck-mcp",
+      "version": "0.1.0"
+    }
+  ],
+  "remotes": {
+    "stdio": {
+      "command": "uvx",
+      "args": ["rundeck-mcp", "--enable-write-tools"],
+      "env": {
+        "RUNDECK_API_TOKEN": "",
+        "RUNDECK_URL": ""
+      }
+    }
+  }
+}

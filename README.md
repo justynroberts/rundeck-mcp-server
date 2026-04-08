@@ -9,6 +9,20 @@ A Model Context Protocol (MCP) server for [Rundeck](https://www.rundeck.com/), e
 - A Rundeck instance with API access
 - A Rundeck API Token (generate under **User Profile > API Tokens** in the Rundeck UI)
 
+## Quick Start
+
+Install and run directly with `uvx` (no clone needed):
+
+```bash
+uvx rundeck-mcp --enable-write-tools
+```
+
+Or install from GitHub:
+
+```bash
+uv pip install git+https://github.com/justynroberts/rundeck-mcp-server.git
+```
+
 ## Environment Variables
 
 | Variable | Required | Default | Description |
@@ -19,25 +33,37 @@ A Model Context Protocol (MCP) server for [Rundeck](https://www.rundeck.com/), e
 
 ## MCP Client Configuration
 
-### Claude Desktop / Claude Code
+### Claude Code
 
-Add to your MCP configuration:
+Add the MCP server to Claude Code:
+
+```bash
+claude mcp add rundeck \
+  -e RUNDECK_API_TOKEN=<your-api-token> \
+  -e RUNDECK_URL=http://your-rundeck-server:4440 \
+  -- uvx rundeck-mcp --enable-write-tools
+```
+
+Or add manually to `~/.claude/settings.json`:
 
 ```json
 {
   "mcpServers": {
     "rundeck": {
       "command": "uvx",
-      "args": ["rundeck-mcp"],
+      "args": ["rundeck-mcp", "--enable-write-tools"],
       "env": {
-        "RUNDECK_API_TOKEN": "<your-api-token>"
+        "RUNDECK_API_TOKEN": "<your-api-token>",
+        "RUNDECK_URL": "http://your-rundeck-server:4440"
       }
     }
   }
 }
 ```
 
-To enable write tools (create projects, import jobs, run jobs):
+### Claude Desktop
+
+Add to your Claude Desktop MCP configuration:
 
 ```json
 {
@@ -92,30 +118,10 @@ Add to `.vscode/mcp.json`:
 }
 ```
 
-## Docker
-
-### Build
-
-```bash
-docker build -t rundeck-mcp .
-```
-
-### Run (read-only)
-
-```bash
-docker run -e RUNDECK_API_TOKEN=<token> -e RUNDECK_URL=http://your-rundeck:4440 rundeck-mcp
-```
-
-### Run (with write tools)
-
-```bash
-docker run -e RUNDECK_API_TOKEN=<token> -e RUNDECK_URL=http://your-rundeck:4440 rundeck-mcp --enable-write-tools
-```
-
 ## Local Development
 
 ```bash
-git clone https://github.com/your-org/rundeck-mcp-server.git
+git clone https://github.com/justynroberts/rundeck-mcp-server.git
 cd rundeck-mcp-server
 uv sync --group dev
 ```
