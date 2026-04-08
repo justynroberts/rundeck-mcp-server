@@ -1,0 +1,9 @@
+# MIT License - Copyright (c) fintonlabs.com
+services:
+  rundeck-mcp:
+    build: .
+    environment:
+      - RUNDECK_API_TOKEN=${RUNDECK_API_TOKEN}
+      - RUNDECK_URL=${RUNDECK_URL:-http://localhost:4440}
+      - RUNDECK_API_VERSION=${RUNDECK_API_VERSION:-41}
+    restart: unless-stopped
